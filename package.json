@@ -1,0 +1,13 @@
+{
+  "name": "@types/ari-client",
+  "version": "0.0.1",
+  "author": {
+    "name": "Dementyev Alexey",
+    "url": "https://github.com/restricted"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">= 4.0.0"
+  },
+  "types": "./src/@types/ari-client/index.d.ts"
+}
