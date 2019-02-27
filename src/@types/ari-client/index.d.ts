@@ -230,20 +230,20 @@ declare module 'ari-client' {
 
     type AriChannelContinueInDialplanOptions = {
         channelId: string,
-        context: string,
-        extension: string,
-        label: string,
-        priority: number
+        context?: string,
+        extension?: string,
+        label?: string,
+        priority?: number
     };
 
     type AriChannelCreateOptions = {
         app: string,
-        appArgs: string,
-        channelId: string,
+        appArgs?: string,
+        channelId?: string,
         endpoint: string,
-        formats: string,
-        originator: string,
-        otherChannelId: string
+        formats?: string,
+        originator?: string,
+        otherChannelId?: string
     };
 
     type AriChannelDialOptions = {
@@ -255,31 +255,31 @@ declare module 'ari-client' {
     type AriStdCallback = (err: any, channel: AriChannel) => void;
 
     type AriChannelOriginateOptions = {
-        app: string,
-        appArgs: string,
-        callerId: string,
-        channelId: string,
-        context: string,
+        app?: string,
+        appArgs?: string,
+        callerId?: string,
+        channelId?: string,
+        context?: string,
         endpoint: string,
-        extension: string,
-        formats: string,
-        label: string,
-        originator: string,
-        otherChannelId: string,
-        priority: number,
-        timeout: number,
-        variables: object
+        extension?: string,
+        formats?: string,
+        label?: string,
+        originator?: string,
+        otherChannelId?: string,
+        priority?: number,
+        timeout?: number,
+        variables?: object
     };
 
     type AriStdPromise = Promise<AriChannel>;
 
     type AriChannelPlayOptions = {
         channelId: string,
-        lang: string,
+        lang?: string,
         media: string,
-        offsetms: number,
-        playbackId: string,
-        skipms: number
+        offsetms?: number,
+        playbackId?: string,
+        skipms?: number
     };
 
     type AriPlaybackPromise = Promise<AriPlayback>;
@@ -295,6 +295,10 @@ declare module 'ari-client' {
         terminateOn?: number
     };
 
+    type AriChannelSendDTMFOptions = { channelId: string, after?: number, before?: number, between?: number, dtmf?: string, duration?: number };
+
+    type AriChannelSnoopOptions = { app: string, channelId: string, appArgs?: string, sniipId?: string, spy?: string, whisper?: string };
+
     export interface AriChannel {
         id: string;
         accountcode: string;
@@ -306,9 +310,9 @@ declare module 'ari-client' {
 
         on(channelEvent: AriChannelEvent | keyof typeof AriChannelEvent, cb: AriEventChannelCallback): void;
 
-        answer(options: { channelId: string }, cb: AriErrCallback): void;
+        answer(options: { channelId?: string }, cb: AriErrCallback): void;
 
-        answer(options: { channelId: string }): AriNullPromise;
+        answer(options: { channelId?: string }): AriNullPromise;
 
         continueInDialplan(options: AriChannelContinueInDialplanOptions, cb: AriErrCallback): void;
 
@@ -330,9 +334,9 @@ declare module 'ari-client' {
 
         getChannelVar(options: { channelId: string, variable: string }): AriDataPromise;
 
-        hangup(options: { channelId: string, reason: string }, cb: AriErrCallback): void;
+        hangup(options: { channelId: string, reason?: string }, cb: AriErrCallback): void;
 
-        hangup(options: { channelId: string, reason: string }): AriNullPromise;
+        hangup(options: { channelId: string, reason?: string }): AriNullPromise;
 
         hold(options: { channelId: string }, cb: AriErrCallback): void;
 
@@ -366,23 +370,41 @@ declare module 'ari-client' {
 
         record(options: AriChannelRecordOptions): Promise<AriRecording>;
 
-        redirect(): void;
+        redirect(options: { channelId: string, endpoint?: string }, cb: AriErrCallback): void;
 
-        ring(): void;
+        redirect(options: { channelId: string, endpoint?: string }): AriNullPromise;
 
-        ringStop(): void;
+        ring(options: { channelId: string }, cb: AriErrCallback): void;
 
-        sendDTMF(): void;
+        ring(options: { channelId: string }): AriNullPromise;
 
-        setChannelVar(): void;
+        ringStop(options: { channelId: string }, cb: AriErrCallback): void;
 
-        snoopChannel(): void;
+        ringStop(options: { channelId: string }): AriNullPromise;
 
-        snoopChannelWithId(): void;
+        sendDTMF(options: AriChannelSendDTMFOptions, cb: AriErrCallback): void;
 
-        startMoh(): void;
+        sendDTMF(options: AriChannelSendDTMFOptions): AriNullPromise;
 
-        startSilence(): void;
+        setChannelVar(options: { channelId: string, variable: string }, cb: AriErrCallback): void;
+
+        setChannelVar(options: { channelId: string, variable: string }): AriNullPromise;
+
+        snoopChannel(options: AriChannelSnoopOptions, cb: AriErrCallback): void;
+
+        snoopChannel(options: AriChannelSnoopOptions): AriNullPromise;
+
+        snoopChannelWithId(options: AriChannelSnoopOptions, cb: AriErrCallback): void;
+
+        snoopChannelWithId(options: AriChannelSnoopOptions): AriNullPromise;
+
+        startMoh(options: { channelId: string, mohClass: string }, cb: AriErrCallback): void;
+
+        startMoh(options: { channelId: string, mohClass: string }): AriNullPromise;
+
+        startSilence(options: { channelId: string }, cb: AriErrCallback): void;
+
+        startSilence(options: { channelId: string }): AriNullPromise;
 
         stopMoh(): void;
 
